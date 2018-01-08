@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mfcwl.boundservices.MainActivity">
+
+    <TextView
+        android:id="@+id/viewnumbers"
+        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="view numbers"
+        android:onClick="onClick"
+        android:gravity="center"
+         />
+
+    <TextView
+        android:id="@+id/startservice"
+        android:paddingTop="80dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="StartServoice"
+        android:gravity="center_horizontal"
+        />
+
+    <TextView
+        android:id="@+id/stopservices"
+        android:paddingTop="130dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="StopService"
+        android:gravity="center_horizontal"
+        />
+
+    <TextView
+        android:id="@+id/onbind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="160dp"
+
+        android:text="OnBind"
+        android:gravity="center_horizontal"
+        />
+
+    <TextView
+        android:id="@+id/onunbind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="view numbers"
+        android:paddingTop="200dp"
+
+        android:gravity="center_horizontal"
+        />
+
+</android.support.constraint.ConstraintLayout>
