@@ -1,60 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mfcwl.boundservices.MainActivity">
+    android:background="#FFFFFF"
+    >
 
-    <TextView
-        android:id="@+id/viewnumbers"
-        android:paddingTop="20dp"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:text="view numbers"
-        android:onClick="onClick"
-        android:gravity="center"
-         />
-
-    <TextView
-        android:id="@+id/startservice"
-        android:paddingTop="80dp"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="StartServoice"
-        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-80dp"
         />
 
-    <TextView
-        android:id="@+id/stopservices"
-        android:paddingTop="130dp"
-
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/starts"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="StopService"
-        android:gravity="center_horizontal"
-        />
-
-    <TextView
-        android:id="@+id/onbind"
-        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="Start" />
+    <Button
+        android:id="@+id/print_timestamp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="160dp"
-
-        android:text="OnBind"
-        android:gravity="center_horizontal"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
+        android:text="Print Timestamp" />
 
     <TextView
-        android:id="@+id/onunbind"
-        android:layout_width="match_parent"
+        android:id="@+id/timestamp_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="view numbers"
-        android:paddingTop="200dp"
+        android:layout_below="@+id/print_timestamp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        android:gravity="center_horizontal"
-        />
+    <Button
+        android:id="@+id/stop_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/print_timestamp"
+        android:layout_centerHorizontal="true"
+        android:text="Stop Service" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

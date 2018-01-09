@@ -6,151 +6,88 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
-
-    private ServiceConnection serviceConnection;
-    private boolean isServicesBound=false;
-    private Intent serviceInten;
-
-    private MyServices myservices;
-    private TextView viewnumbers;
-    private TextView startservice;
-
-
+    BoundService mBoundService;
+    boolean mServiceBound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //region Description
-        //<editor-fold desc="Description">
-        viewnumbers = (TextView) findViewById(R.id.viewnumbers);
-        //</editor-fold>
-
-        
-
-        //endregion
-        TextView startservice = (TextView) findViewById(R.id.startservice);
-        TextView stopservice = (TextView) findViewById(R.id.stopservices);
-        TextView onbind = (TextView) findViewById(R.id.onbind);
-        TextView onunbind = (TextView) findViewById(R.id.onunbind);
+        final TextView timestampText = (TextView) findViewById(R.id.timestamp_text);
+        Button printTimestampButton = (Button) findViewById(R.id.print_timestamp);
+        Button stopServiceButon = (Button) findViewById(R.id.stop_service);
+        Button starts = (Button) findViewById(R.id.starts);
 
 
-        viewnumbers.setOnClickListener(new View.OnClickListener() {
+        starts.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
 
-                Log.e("vvvv","vvvv");
-                Log.e("vvvv","vvvv"+ viewnumbers.getText().toString());
-
-
+                Intent intent = new Intent(v.getContext(), BoundService.class);
+                startService(intent);
+                bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
             }
         });
 
-
-        startservice.setOnClickListener(new View.OnClickListener() {
+        printTimestampButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Log.e("vvvv","vvvv");
-
-              //  startservice();
-
+            public void onClick(View v) {
+                if (mServiceBound) {
+                    timestampText.setText(mBoundService.getTimestamp());
+                }
             }
         });
 
-
-        stopservice.setOnClickListener(new View.OnClickListener() {
+        stopServiceButon.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Log.e("vvvv","vvvv");
-
-                // stopservice();
+            public void onClick(View v) {
+                if (mServiceBound) {
+                    unbindService(mServiceConnection);
+                    mServiceBound = false;
+                }
+                Intent intent = new Intent(MainActivity.this,
+                        BoundService.class);
+                stopService(intent);
             }
         });
-        onbind.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("vvvv","vvvv");
 
-                //onbindservice();
-            }
-        });
-        onunbind.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("vvvv","vvvv");
-
-                // onunbindservice();
-            }
-        });
     }
 
-
-
-   public void viewnumbers() {
-
-       // if(isServicesBound){
-          //  viewnumbers.setText("no data");
-
-           // viewnumbers.setText("The Random No:="+myservices.getRamdomNumber());
-       // }else{
-        //    viewnumbers.setText("no data");
-       // }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        /*Intent intent = new Intent(this, BoundService.class);
+        startService(intent);
+        bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);*/
     }
- /*
-    private void onunbindservice() {
 
-        if(isServicesBound){
-            unbindService(serviceConnection);
-            isServicesBound=false;
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mServiceBound) {
+            unbindService(mServiceConnection);
+            mServiceBound = false;
         }
     }
 
-    private void onbindservice() {
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
 
-        if (serviceConnection == null) {
-
-            serviceConnection = new ServiceConnection() {
-                @Override
-                public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-
-                    MyServices.MyServiceIBinder ibb=(MyServices.MyServiceIBinder)iBinder;
-
-                    myservices=ibb.getServices();
-
-                    isServicesBound=true;
-                }
-
-                @Override
-                public void onServiceDisconnected(ComponentName componentName) {
-                    isServicesBound=false;
-                }
-            };
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mServiceBound = false;
         }
 
-        bindService(serviceInten,serviceConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    private void stopservice() {
-        stopService(serviceInten);
-    }
-
-    private void startservice() {
-
-        startService(serviceInten);
-
-
-    }*/
-
-
-
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            BoundService.MyBinder myBinder = (BoundService.MyBinder) service;
+            mBoundService = myBinder.getService();
+            mServiceBound = true;
+        }
+    };
 }
